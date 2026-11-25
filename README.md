@@ -1,21 +1,23 @@
 # dsh-compaction-agentframe
 
-AgentFrame 压缩后端插件 —— 把 DeepSeek Harness 的默认 LLM 摘要压缩替换为
-**语义 + 物理双轨压缩**（28.4x KV 压缩思路）。
+AgentFrame compaction backend plugin — replaces DeepSeek Harness's default
+LLM-summarization compaction with **semantic + physical dual-track compression**
+(the 28.4x KV-compression idea).
 
-## 为什么替换默认压缩
+## Why replace the default compaction
 
-默认 `compaction-basic` 用 LLM 摘要（有损总结旧对话），每次压缩都要一次
-LLM 调用，且摘要可能丢细节。
+The default `compaction-basic` uses LLM summarization (a lossy recap of old
+conversation), spending one LLM call per compaction, and the summary may lose
+detail.
 
-AgentFrame 的思路：
-- **语义轨**：MemoryDirector 判断哪些 token 值得保留（去闲聊、留关键）
-- **物理轨**：吸收式 MLA + INT4 量化（270KB→7.6KB/token，28.4x）
-- **效果**：保留关键信息 + 大幅省 token + 不额外调用 LLM
+The AgentFrame approach:
+- **Semantic track**: MemoryDirector decides which tokens are worth keeping (drop chatter, keep the essentials).
+- **Physical track**: absorptive MLA + INT4 quantization (270KB→7.6KB/token, 28.4x).
+- **Result**: key information retained + large token savings + no extra LLM calls.
 
-## 使用
+## Usage
 
-在 profile 的 `cordis.patch.yml` 中把 `compaction-basic` 替换为：
+In your profile's `cordis.patch.yml`, replace `compaction-basic` with:
 
 ```yaml
 - id: compaction-agentframe
@@ -26,25 +28,25 @@ AgentFrame 的思路：
     physical: true
 ```
 
-## 配置
+## Configuration
 
-| 字段 | 默认 | 说明 |
-|------|------|------|
-| `semantic` | true | 语义压缩（保留高信息行） |
-| `retainRatio` | 0.2 | 压缩后保留比例 |
-| `physical` | true | 物理压缩记账（bytes/token） |
-| `bytesPerToken` | 7776 | INT4 压缩后每 token 字节 |
-| `auto` | true | 自动压缩 |
+| Field | Default | Description |
+|-------|---------|-------------|
+| `semantic` | true | Semantic compression (keep high-information lines) |
+| `retainRatio` | 0.2 | Retention ratio after compaction |
+| `physical` | true | Physical compression accounting (bytes/token) |
+| `bytesPerToken` | 7776 | Bytes per token after INT4 compression |
+| `auto` | true | Automatic compaction |
 
-## 实现
+## Implementation
 
-继承 `CompactionEngine`（compaction seam），实现三个抽象方法：
-- `compactIfNeeded` — 自动压力触发
-- `compactNow` — 手动 /compact 命令
-- `compactRegion` — 指定范围压缩
+Extends `CompactionEngine` (the compaction seam) and implements its three abstract methods:
+- `compactIfNeeded` — automatic pressure trigger
+- `compactNow` — manual /compact command
+- `compactRegion` — compaction of a specified range
 
-保持 dsh 的 surface/事件/持久化契约（compaction/start → replace → compaction/end），
-只替换"如何压缩"。
+Keeps dsh's surface/event/persistence contract (compaction/start → replace → compaction/end);
+only replaces *how* compaction is done.
 
 ## License
 

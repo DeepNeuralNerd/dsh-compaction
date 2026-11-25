@@ -1,31 +1,15 @@
 {
-  "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
+    "target": "es2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": true,
+    "strict": false,
+    "skipLibCheck": true,
     "rootDir": "src",
-    "outDir": "lib/types"
+    "outDir": "lib"
   },
-  "include": ["src"],
-  "references": [
-    {
-      "path": "../../../vendor/cosmokit"
-    },
-    {
-      "path": "../../../vendor/cordis"
-    },
-    {
-      "path": "../../../vendor/schemastery"
-    },
-    {
-      "path": "../../llm/llm"
-    },
-    {
-      "path": "../../core/session"
-    },
-    {
-      "path": "../../core/agent"
-    },
-    {
-      "path": "../compaction"
-    }
-  ]
+  "include": ["src", "types-stub.d.ts"]
 }

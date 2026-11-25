@@ -23,7 +23,8 @@
     "@deepseek-ai/dsh-agent": ">=0.1.0"
   },
   "scripts": {
-    "build": "tsc -b tsconfig.json",
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.types.json",
+    "prepare": "tsc -p tsconfig.json && tsc -p tsconfig.types.json",
     "test": "tsx tests/smoke.ts"
   },
   "devDependencies": {

@@ -2,9 +2,8 @@
  * AgentFrame compaction backend for DeepSeek Harness.
  *
  * Replaces the default LLM-summarization compaction with AgentFrame's
- * dual-track compression:
- *   1. Semantic track (MemoryDirector): decide which tokens matter
- *   2. Physical track (AbsorbedMLA + INT4): 28.4x KV compression
+ * semantic compression: decide which tokens matter, drop the chatter.
+ * Deterministic, zero extra model calls.
  *
  * @module @deepseek-ai/dsh-compaction-agentframe
  */
@@ -17,10 +16,6 @@ export interface AgentFrameCompactionConfig {
     semantic: boolean;
     /** Target retention ratio after compaction (0.2 = keep 20%). */
     retainRatio: number;
-    /** Enable physical KV compression accounting. */
-    physical: boolean;
-    /** Approximate bytes per token for accounting. */
-    bytesPerToken: number;
     /** Auto compaction on pressure. */
     auto: boolean;
 }

@@ -171,7 +171,7 @@ export class AgentFrameCompactionEngine extends CompactionEngine {
     for (const ev of events) {
       const text = this._eventText(ev)
       if (!text) continue
-      if (/`|\.(ts|py|js|json|md|sh)\b|npm |pnpm |git |error|fix|decide|因为|所以|方案|决定/.test(text)) {
+      if (/`|\.(ts|py|js|json|md|sh)\b|npm |pnpm |git |error|fix|decide|because|so that|therefore|plan|decision|因为|所以|方案|决定/.test(text)) {
         keep.push(text.slice(0, 400))
       } else if (keep.length < 40 && text.length > 20) {
         keep.push(text.slice(0, 200))

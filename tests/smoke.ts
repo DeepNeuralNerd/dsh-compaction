@@ -36,14 +36,14 @@ async function main() {
   // Verify condense logic with a fake session.
   const fakeSession = {
     log: [
-      { seq: 0, type: 'user/message', content: '帮我写一个 TCP 服务器' },
-      { seq: 1, type: 'assistant/message', content: '好的，用 Python 的 socket 模块。先创建 socket: `s = socket.socket()`' },
-      { seq: 2, type: 'user/message', content: '今天天气不错' },
-      { seq: 3, type: 'assistant/message', content: '哈哈是啊。继续：绑定端口 8080，监听连接。' },
-      { seq: 4, type: 'user/message', content: '那错误处理怎么做？' },
-      { seq: 5, type: 'assistant/message', content: '用 try/except 捕获 ConnectionError，记录日志。这是关键点。' },
-      { seq: 6, type: 'user/message', content: '好的明白了' },
-      { seq: 7, type: 'assistant/message', content: '嗯嗯有问题随时问～' },
+      { seq: 0, type: 'user/message', content: 'Write me a TCP server' },
+      { seq: 1, type: 'assistant/message', content: 'Sure, using Python\'s socket module. First create the socket: `s = socket.socket()`' },
+      { seq: 2, type: 'user/message', content: 'Nice weather today' },
+      { seq: 3, type: 'assistant/message', content: 'Haha yes. Continuing: bind port 8080, listen for connections.' },
+      { seq: 4, type: 'user/message', content: 'How should I handle errors?' },
+      { seq: 5, type: 'assistant/message', content: 'Catch ConnectionError with try/except and log it. That is the key point.' },
+      { seq: 6, type: 'user/message', content: 'OK, got it' },
+      { seq: 7, type: 'assistant/message', content: 'Sure, ask anytime.' },
     ],
   }
 
@@ -56,11 +56,11 @@ async function main() {
   console.log(summary)
   console.log('----------------------------------------')
 
-  // Verify chatter was dropped (no "天气不错" in summary).
-  const chatterDropped = !summary.includes('天气不错')
+  // Verify chatter was dropped (no "Nice weather" in summary).
+  const chatterDropped = !summary.includes('Nice weather')
   const codeKept = summary.includes('socket')
-  console.log('[smoke] 闲聊被剔除 =', chatterDropped ? '✅' : '❌')
-  console.log('[smoke] 关键代码保留 =', codeKept ? '✅' : '❌')
+  console.log('[smoke] chatter dropped =', chatterDropped ? '✅' : '❌')
+  console.log('[smoke] key code kept =', codeKept ? '✅' : '❌')
 
   console.log('\n✅ smoke test complete')
 }

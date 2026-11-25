@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationMap": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "rootDir": "src",
+    "outDir": "lib/types"
+  },
+  "include": ["src", "types-stub.d.ts"]
+}
